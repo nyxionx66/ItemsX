@@ -1019,18 +1019,45 @@ public class TradeEditor implements Listener {
 
             List<Component> lore = new ArrayList<>();
             lore.add(Component.text(""));
+            
+            // Enhanced input display
+            String input1Type = trade.getInput1().isCustomItem() ? "Custom" : "Vanilla";
             lore.add(plugin.getColorUtil().parseColor("<aqua>📥 Input 1: <white>" + 
-                trade.getInput1().getItem() + " x" + trade.getInput1().getAmount()));
+                trade.getInput1().getItem() + " x" + trade.getInput1().getAmount() + 
+                " <gray>(" + input1Type + ")"));
+            
             if (trade.hasSecondInput()) {
+                String input2Type = trade.getInput2().isCustomItem() ? "Custom" : "Vanilla";
                 lore.add(plugin.getColorUtil().parseColor("<aqua>📥 Input 2: <white>" + 
-                    trade.getInput2().getItem() + " x" + trade.getInput2().getAmount()));
+                    trade.getInput2().getItem() + " x" + trade.getInput2().getAmount() + 
+                    " <gray>(" + input2Type + ")"));
             }
+            
+            String outputType = trade.getOutput().isCustomItem() ? "Custom" : "Vanilla";
             lore.add(plugin.getColorUtil().parseColor("<green>📤 Output: <white>" + 
-                trade.getOutput().getItem() + " x" + trade.getOutput().getAmount()));
+                trade.getOutput().getItem() + " x" + trade.getOutput().getAmount() + 
+                " <gray>(" + outputType + ")"));
+            
             lore.add(Component.text(""));
-            lore.add(plugin.getColorUtil().parseColor("<yellow>⚡ Actions:"));
-            lore.add(plugin.getColorUtil().parseColor("<gray>• <green>Left Click</green> to Edit"));
-            lore.add(plugin.getColorUtil().parseColor("<gray>• <red>Right Click</red> to Delete"));
+            
+            // Trade recipe preview
+            lore.add(plugin.getColorUtil().parseColor("<gradient:#FFD700:#FFA500>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</gradient>"));
+            lore.add(plugin.getColorUtil().parseColor("<yellow>⚡ Trade Recipe Preview:"));
+            
+            StringBuilder recipeBuilder = new StringBuilder();
+            recipeBuilder.append(trade.getInput1().getItem());
+            if (trade.hasSecondInput()) {
+                recipeBuilder.append(" + ").append(trade.getInput2().getItem());
+            }
+            recipeBuilder.append(" → ").append(trade.getOutput().getItem());
+            
+            lore.add(plugin.getColorUtil().parseColor("<gray>" + recipeBuilder.toString()));
+            lore.add(Component.text(""));
+            
+            // Action instructions
+            lore.add(plugin.getColorUtil().parseColor("<yellow>⚡ Management Actions:"));
+            lore.add(plugin.getColorUtil().parseColor("<gray>• <green>Left Click</green> to Edit Trade"));
+            lore.add(plugin.getColorUtil().parseColor("<gray>• <red>Right Click</red> to Delete Trade"));
             lore.add(plugin.getColorUtil().parseColor("<gray>• <gold>Shift+Right</gold> to Get Output Item"));
             
             meta.lore(lore);
