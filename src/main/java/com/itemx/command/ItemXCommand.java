@@ -180,19 +180,7 @@ public class ItemXCommand implements CommandExecutor, TabCompleter {
     
 
     
-    private boolean handleTradeReload(CommandSender sender) {
-        if (!sender.hasPermission("itemx.trade.admin")) {
-            sender.sendMessage(plugin.getPrefix().append(plugin.getMessage("no-permission")));
-            return true;
-        }
-        
-        plugin.getTradeManager().reload();
-        sender.sendMessage(plugin.getPrefix().append(
-            plugin.getColorUtil().parseColor("<green>Reloaded " + plugin.getTradeManager().getTradeGUICount() + " trade GUIs")
-        ));
-        
-        return true;
-    }
+
     
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
