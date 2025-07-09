@@ -179,34 +179,61 @@ public class TradeEditor implements Listener {
     }
 
     /**
-     * Sets up the interactive slots for placing items
+     * Sets up the interactive slots for placing items with enhanced visual feedback
      */
     private void setupInteractiveSlots(Inventory gui, EditorSession session) {
         // Input 1 slot
         if (session.getInput1() != null) {
-            gui.setItem(INPUT1_SLOT, createItemFromTradeItem(session.getInput1()));
+            ItemStack item = createItemFromTradeItem(session.getInput1());
+            if (item != null) {
+                item = enhanceItemWithFeedback(item, "input1");
+                gui.setItem(INPUT1_SLOT, item);
+            }
         } else {
-            gui.setItem(INPUT1_SLOT, createPlaceholderItem(Material.CHEST, 
+            gui.setItem(INPUT1_SLOT, createEnhancedPlaceholder(Material.CHEST, 
                 "<gradient:#FFD700:#FFA500>📥 Input Slot 1</gradient>", 
-                "Place the required item here"));
+                Arrays.asList(
+                    "<gray>Place the required item here",
+                    "<yellow>✦ Drag and drop or shift-click",
+                    "<aqua>✦ Supports custom ItemX items",
+                    "<green>✦ Required for trade creation"
+                )));
         }
 
         // Input 2 slot
         if (session.getInput2() != null) {
-            gui.setItem(INPUT2_SLOT, createItemFromTradeItem(session.getInput2()));
+            ItemStack item = createItemFromTradeItem(session.getInput2());
+            if (item != null) {
+                item = enhanceItemWithFeedback(item, "input2");
+                gui.setItem(INPUT2_SLOT, item);
+            }
         } else {
-            gui.setItem(INPUT2_SLOT, createPlaceholderItem(Material.ENDER_CHEST,
+            gui.setItem(INPUT2_SLOT, createEnhancedPlaceholder(Material.ENDER_CHEST,
                 "<gradient:#9370DB:#8A2BE2>📥 Input Slot 2</gradient>", 
-                "Place the optional second item here"));
+                Arrays.asList(
+                    "<gray>Place the optional second item here",
+                    "<yellow>✦ Drag and drop or shift-click",
+                    "<aqua>✦ Supports custom ItemX items",
+                    "<light_purple>✦ Optional for trade creation"
+                )));
         }
 
         // Output slot
         if (session.getOutput() != null) {
-            gui.setItem(OUTPUT_SLOT, createItemFromTradeItem(session.getOutput()));
+            ItemStack item = createItemFromTradeItem(session.getOutput());
+            if (item != null) {
+                item = enhanceItemWithFeedback(item, "output");
+                gui.setItem(OUTPUT_SLOT, item);
+            }
         } else {
-            gui.setItem(OUTPUT_SLOT, createPlaceholderItem(Material.SHULKER_BOX,
+            gui.setItem(OUTPUT_SLOT, createEnhancedPlaceholder(Material.SHULKER_BOX,
                 "<gradient:#32CD32:#228B22>📤 Output Slot</gradient>", 
-                "Place the resulting item here"));
+                Arrays.asList(
+                    "<gray>Place the resulting item here",
+                    "<yellow>✦ Drag and drop or shift-click",
+                    "<aqua>✦ Supports custom ItemX items",
+                    "<green>✦ Required for trade creation"
+                )));
         }
     }
 
