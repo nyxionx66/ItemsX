@@ -802,7 +802,81 @@ public class TradeEditor implements Listener {
         return id != null && id.matches("^[a-zA-Z0-9_]{1,32}$");
     }
 
-    // Item Creation Methods
+    // Enhanced Item Creation Methods
+
+    /**
+     * Creates an enhanced placeholder item with better visual feedback
+     */
+    private ItemStack createEnhancedPlaceholder(Material material, String name, List<String> lore) {
+        ItemStack item = new ItemStack(material);
+        ItemMeta meta = item.getItemMeta();
+        if (meta != null) {
+            meta.displayName(plugin.getColorUtil().parseColor(name));
+            
+            List<Component> loreComponents = new ArrayList<>();
+            for (String line : lore) {
+                loreComponents.add(plugin.getColorUtil().parseColor(line));
+            }
+            // Add separator and interaction hint
+            loreComponents.add(Component.text(""));
+            loreComponents.add(plugin.getColorUtil().parseColor("<gradient:#FFD700:#FFA500>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</gradient>"));
+            loreComponents.add(plugin.getColorUtil().parseColor("<white>Interaction Options:"));
+            loreComponents.add(plugin.getColorUtil().parseColor("<gray>• Drag item from inventory"));
+            loreComponents.add(plugin.getColorUtil().parseColor("<gray>• Shift-click item in inventory"));
+            loreComponents.add(plugin.getColorUtil().parseColor("<gray>• Right-click to clear slot"));
+            
+            meta.lore(loreComponents);
+            item.setItemMeta(meta);
+        }
+        return item;
+    }
+
+    /**
+     * Enhances an item with visual feedback about its role
+     */
+    private ItemStack enhanceItemWithFeedback(ItemStack item, String slotType) {
+        if (item == null) return null;
+        
+        ItemStack enhanced = item.clone();
+        ItemMeta meta = enhanced.getItemMeta();
+        if (meta == null) return enhanced;
+        
+        List<Component> lore = meta.lore();
+        if (lore == null) lore = new ArrayList<>();
+        
+        // Add separator and role information
+        lore.add(Component.text(""));
+        lore.add(plugin.getColorUtil().parseColor("<gradient:#FFD700:#FFA500>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</gradient>"));
+        
+        switch (slotType) {
+            case "input1":
+                lore.add(plugin.getColorUtil().parseColor("<gradient:#FFD700:#FFA500>📥 Trade Input 1 (Required)</gradient>"));
+                lore.add(plugin.getColorUtil().parseColor("<gray>Players need this item to trade"));
+                break;
+            case "input2":
+                lore.add(plugin.getColorUtil().parseColor("<gradient:#9370DB:#8A2BE2>📥 Trade Input 2 (Optional)</gradient>"));
+                lore.add(plugin.getColorUtil().parseColor("<gray>Additional item for the trade"));
+                break;
+            case "output":
+                lore.add(plugin.getColorUtil().parseColor("<gradient:#32CD32:#228B22>📤 Trade Output (Required)</gradient>"));
+                lore.add(plugin.getColorUtil().parseColor("<gray>Players receive this item"));
+                break;
+        }
+        
+        // Add custom item detection
+        if (plugin.getItemManager().isCustomItem(enhanced)) {
+            String customId = plugin.getItemManager().getCustomItemId(enhanced);
+            lore.add(plugin.getColorUtil().parseColor("<aqua>✦ Custom ItemX Item: " + customId));
+        } else {
+            lore.add(plugin.getColorUtil().parseColor("<yellow>✦ Vanilla Minecraft Item"));
+        }
+        
+        lore.add(plugin.getColorUtil().parseColor("<gray>Right-click to remove from slot"));
+        
+        meta.lore(lore);
+        enhanced.setItemMeta(meta);
+        return enhanced;
+    }
 
     private ItemStack createGlassPane(Material material, String name) {
         ItemStack item = new ItemStack(material);
