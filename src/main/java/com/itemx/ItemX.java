@@ -74,6 +74,10 @@ public class ItemX extends JavaPlugin {
         return tradeEditor;
     }
     
+    public TradeReorderGUI getTradeReorderGUI() {
+        return tradeReorderGUI;
+    }
+    
     public void reload() {
         reloadConfig();
         itemManager.loadItems();
