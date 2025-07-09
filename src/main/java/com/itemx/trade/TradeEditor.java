@@ -610,16 +610,42 @@ public class TradeEditor implements Listener {
     // Action Handlers
 
     private void handleSaveTrade(Player player, EditorSession session) {
-        if (session.getInput1() == null || session.getOutput() == null) {
+        // Enhanced validation with detailed feedback
+        List<String> errors = new ArrayList<>();
+        
+        if (session.getInput1() == null) {
+            errors.add("Input 1 is required");
+        }
+        if (session.getOutput() == null) {
+            errors.add("Output is required");
+        }
+        
+        if (!errors.isEmpty()) {
             player.sendMessage(plugin.getPrefix().append(
-                plugin.getColorUtil().parseColor("<red>Input 1 and Output are required!")
+                plugin.getColorUtil().parseColor("<red>Cannot save trade - Missing required items:")
             ));
+            for (String error : errors) {
+                player.sendMessage(plugin.getPrefix().append(
+                    plugin.getColorUtil().parseColor("<gray>• " + error)
+                ));
+            }
             return;
         }
 
         String tradeId = session.getTradeId();
         if (tradeId == null || tradeId.isEmpty()) {
             tradeId = generateTradeId();
+        }
+
+        // Check for duplicate trade IDs (excluding current trade if editing)
+        TradeGUI tradeGUI = plugin.getTradeManager().getTradeGUI(session.getGuiName());
+        if (tradeGUI != null && tradeGUI.hasTrade(tradeId)) {
+            if (session.getExistingTrade() == null || !session.getExistingTrade().getId().equals(tradeId)) {
+                player.sendMessage(plugin.getPrefix().append(
+                    plugin.getColorUtil().parseColor("<red>Trade ID '" + tradeId + "' already exists! Please choose a different ID.")
+                ));
+                return;
+            }
         }
 
         TradeDefinition trade = new TradeDefinition(tradeId, session.getInput1(), 
@@ -633,8 +659,25 @@ public class TradeEditor implements Listener {
 
         plugin.getTradeManager().addTrade(session.getGuiName(), trade);
         
+        // Enhanced success message
+        String action = session.getExistingTrade() != null ? "updated" : "created";
         player.sendMessage(plugin.getPrefix().append(
-            plugin.getColorUtil().parseColor("<green>Trade saved successfully with ID: <white>" + tradeId)
+            plugin.getColorUtil().parseColor("<green>✓ Trade " + action + " successfully!")
+        ));
+        player.sendMessage(plugin.getPrefix().append(
+            plugin.getColorUtil().parseColor("<gray>Trade ID: <white>" + tradeId)
+        ));
+        
+        // Show trade summary
+        StringBuilder summary = new StringBuilder();
+        summary.append(trade.getInput1().getItem());
+        if (trade.hasSecondInput()) {
+            summary.append(" + ").append(trade.getInput2().getItem());
+        }
+        summary.append(" → ").append(trade.getOutput().getItem());
+        
+        player.sendMessage(plugin.getPrefix().append(
+            plugin.getColorUtil().parseColor("<gray>Recipe: <yellow>" + summary.toString())
         ));
 
         session.setClosingNormally(true);
