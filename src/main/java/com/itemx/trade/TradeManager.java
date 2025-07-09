@@ -210,6 +210,43 @@ public class TradeManager {
     }
 
     /**
+     * Opens the trade manager interface for a player
+     *
+     * @param player  The player to open the manager for
+     * @param guiName The unique name of the GUI to manage
+     */
+    public void openTradeManager(Player player, String guiName) {
+        TradeGUI tradeGUI = tradeGUIs.get(guiName);
+        if (tradeGUI == null) {
+            player.sendMessage(plugin.getPrefix().append(
+                    plugin.getColorUtil().parseColor("<red>Trade GUI '" + guiName + "' not found.")
+            ));
+            return;
+        }
+
+        plugin.getTradeEditor().openTradeManager(player, guiName);
+    }
+
+    /**
+     * Opens the trade editor interface for a player
+     *
+     * @param player  The player to open the editor for
+     * @param guiName The unique name of the GUI to edit
+     * @param tradeId The ID of the trade to edit (null for new trade)
+     */
+    public void openTradeEditor(Player player, String guiName, String tradeId) {
+        TradeGUI tradeGUI = tradeGUIs.get(guiName);
+        if (tradeGUI == null) {
+            player.sendMessage(plugin.getPrefix().append(
+                    plugin.getColorUtil().parseColor("<red>Trade GUI '" + guiName + "' not found.")
+            ));
+            return;
+        }
+
+        plugin.getTradeEditor().openTradeEditor(player, guiName, tradeId);
+    }
+
+    /**
      * Alias for {@link #loadTrades()}, providing a clear reload entry point.
      */
     public void reload() {
