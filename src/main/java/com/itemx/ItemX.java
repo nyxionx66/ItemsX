@@ -54,22 +54,9 @@ public class ItemX extends JavaPlugin {
         return colorUtil;
     }
     
-    public TradeManager getTradeManager() {
-        return tradeManager;
-    }
-    
-    public TradeEditor getTradeEditor() {
-        return tradeEditor;
-    }
-    
-    public TradeReorderGUI getTradeReorderGUI() {
-        return tradeReorderGUI;
-    }
-    
     public void reload() {
         reloadConfig();
         itemManager.loadItems();
-        tradeManager.loadTrades();
     }
     
     public void debug(String message) {
