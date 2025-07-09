@@ -174,43 +174,7 @@ public class ItemXCommand implements CommandExecutor, TabCompleter {
     
 
     
-    private boolean handleTradeRename(CommandSender sender, String[] args) {
-        if (!sender.hasPermission("itemx.trade.admin")) {
-            sender.sendMessage(plugin.getPrefix().append(plugin.getMessage("no-permission")));
-            return true;
-        }
-        
-        if (args.length < 4) {
-            sender.sendMessage(plugin.getPrefix().append(
-                plugin.getColorUtil().parseColor("<red>Usage: /itemx trade rename <gui-name> <new-name>")
-            ));
-            return true;
-        }
-        
-        String oldName = args[2];
-        String newName = args[3];
-        
-        if (!plugin.getTradeManager().hasTradeGUI(oldName)) {
-            sender.sendMessage(plugin.getPrefix().append(
-                plugin.getColorUtil().parseColor("<red>Trade GUI '" + oldName + "' not found.")
-            ));
-            return true;
-        }
-        
-        if (plugin.getTradeManager().hasTradeGUI(newName)) {
-            sender.sendMessage(plugin.getPrefix().append(
-                plugin.getColorUtil().parseColor("<red>Trade GUI '" + newName + "' already exists.")
-            ));
-            return true;
-        }
-        
-        plugin.getTradeManager().renameTradeGUI(oldName, newName);
-        sender.sendMessage(plugin.getPrefix().append(
-            plugin.getColorUtil().parseColor("<green>Renamed trade GUI from '" + oldName + "' to '" + newName + "'")
-        ));
-        
-        return true;
-    }
+
     
     private boolean handleTradeTitle(CommandSender sender, String[] args) {
         if (!sender.hasPermission("itemx.trade.admin")) {
