@@ -247,6 +247,24 @@ public class TradeManager {
     }
 
     /**
+     * Opens the reorder GUI for a player
+     *
+     * @param player  The player to open the reorder GUI for
+     * @param guiName The unique name of the GUI to reorder
+     */
+    public void openReorderGUI(Player player, String guiName) {
+        TradeGUI tradeGUI = tradeGUIs.get(guiName);
+        if (tradeGUI == null) {
+            player.sendMessage(plugin.getPrefix().append(
+                    plugin.getColorUtil().parseColor("<red>Trade GUI '" + guiName + "' not found.")
+            ));
+            return;
+        }
+
+        plugin.getTradeReorderGUI().openReorderGUI(player, guiName);
+    }
+
+    /**
      * Alias for {@link #loadTrades()}, providing a clear reload entry point.
      */
     public void reload() {
