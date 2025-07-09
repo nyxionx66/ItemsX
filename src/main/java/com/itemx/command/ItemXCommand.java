@@ -168,34 +168,7 @@ public class ItemXCommand implements CommandExecutor, TabCompleter {
     
 
     
-    private boolean handleTradeList(CommandSender sender) {
-        if (!sender.hasPermission("itemx.trade.admin")) {
-            sender.sendMessage(plugin.getPrefix().append(plugin.getMessage("no-permission")));
-            return true;
-        }
-        
-        Set<String> guiNames = plugin.getTradeManager().getTradeGUINames();
-        
-        if (guiNames.isEmpty()) {
-            sender.sendMessage(plugin.getPrefix().append(
-                plugin.getColorUtil().parseColor("<yellow>No trade GUIs found.")
-            ));
-            return true;
-        }
-        
-        sender.sendMessage(plugin.getPrefix().append(
-            plugin.getColorUtil().parseColor("<green>Available Trade GUIs:")
-        ));
-        
-        for (String guiName : guiNames) {
-            com.itemx.trade.TradeGUI tradeGUI = plugin.getTradeManager().getTradeGUI(guiName);
-            sender.sendMessage(plugin.getColorUtil().parseColor(
-                "<yellow>- " + guiName + "<gray> (" + tradeGUI.getTradeCount() + " trades)"
-            ));
-        }
-        
-        return true;
-    }
+
     
     private boolean handleTradeCreate(CommandSender sender, String[] args) {
         if (!sender.hasPermission("itemx.trade.admin")) {
