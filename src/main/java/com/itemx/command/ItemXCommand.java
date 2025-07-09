@@ -172,35 +172,7 @@ public class ItemXCommand implements CommandExecutor, TabCompleter {
     
 
     
-    private boolean handleTradeDelete(CommandSender sender, String[] args) {
-        if (!sender.hasPermission("itemx.trade.admin")) {
-            sender.sendMessage(plugin.getPrefix().append(plugin.getMessage("no-permission")));
-            return true;
-        }
-        
-        if (args.length < 3) {
-            sender.sendMessage(plugin.getPrefix().append(
-                plugin.getColorUtil().parseColor("<red>Usage: /itemx trade delete <gui-name>")
-            ));
-            return true;
-        }
-        
-        String guiName = args[2];
-        
-        if (!plugin.getTradeManager().hasTradeGUI(guiName)) {
-            sender.sendMessage(plugin.getPrefix().append(
-                plugin.getColorUtil().parseColor("<red>Trade GUI '" + guiName + "' not found.")
-            ));
-            return true;
-        }
-        
-        plugin.getTradeManager().deleteTradeGUI(guiName);
-        sender.sendMessage(plugin.getPrefix().append(
-            plugin.getColorUtil().parseColor("<green>Deleted trade GUI '" + guiName + "'")
-        ));
-        
-        return true;
-    }
+
     
     private boolean handleTradeRename(CommandSender sender, String[] args) {
         if (!sender.hasPermission("itemx.trade.admin")) {
