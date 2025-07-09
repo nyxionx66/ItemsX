@@ -187,7 +187,7 @@ public class ItemXCommand implements CommandExecutor, TabCompleter {
         List<String> completions = new ArrayList<>();
         
         if (args.length == 1) {
-            completions.addAll(Arrays.asList("give", "get", "trade", "reload"));
+            completions.addAll(Arrays.asList("give", "get", "reload"));
         } else if (args.length == 2) {
             if (args[0].equalsIgnoreCase("give")) {
                 completions.addAll(plugin.getItemManager().getItemIds());
@@ -198,24 +198,12 @@ public class ItemXCommand implements CommandExecutor, TabCompleter {
                 for (String category : plugin.getItemManager().getCategories()) {
                     completions.add("category:" + category);
                 }
-            } else if (args[0].equalsIgnoreCase("trade")) {
-                completions.addAll(Arrays.asList("list", "create", "delete", "rename", "title", "edit", "reload"));
             }
         } else if (args.length == 3) {
             if (args[0].equalsIgnoreCase("give")) {
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     completions.add(player.getName());
                 }
-            } else if (args[0].equalsIgnoreCase("trade")) {
-                String subcommand = args[1].toLowerCase();
-                if (Arrays.asList("delete", "rename", "title", "edit").contains(subcommand)) {
-                    completions.addAll(plugin.getTradeManager().getTradeGUINames());
-                }
-            }
-        } else if (args.length == 4) {
-            if (args[0].equalsIgnoreCase("trade") && args[1].equalsIgnoreCase("rename")) {
-                // For rename, don't suggest existing names for the new name
-                completions.add("<new-name>");
             }
         }
         
