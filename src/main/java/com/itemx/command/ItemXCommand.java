@@ -387,7 +387,7 @@ public class ItemXCommand implements CommandExecutor, TabCompleter {
             return true;
         }
         
-        plugin.getTradeEditor().openEnhancedTradeManager((Player) sender, guiName);
+        plugin.getTradeManager().openTradeManager((Player) sender, guiName);
         return true;
     }
     
