@@ -36,6 +36,7 @@ public class ItemX extends JavaPlugin {
         // Initialize trade system
         tradeManager = new TradeManager(this);
         tradeEditor = new TradeEditor(this);
+        tradeReorderGUI = new TradeReorderGUI(this);
         
         // Register commands
         getCommand("itemx").setExecutor(new ItemXCommand(this));
