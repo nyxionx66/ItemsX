@@ -609,10 +609,11 @@ public class TradeEditor implements Listener {
     }
 
     private void handleReorderTrades(Player player, EditorSession session) {
-        // TODO: Implement reorder functionality
-        player.sendMessage(plugin.getPrefix().append(
-            plugin.getColorUtil().parseColor("<yellow>Reorder functionality will be implemented in Phase 3.")
-        ));
+        session.setClosingNormally(true);
+        player.closeInventory();
+        
+        // Use the new reorder GUI
+        plugin.getTradeManager().openReorderGUI(player, session.getGuiName());
     }
 
     private void handleTradeClick(InventoryClickEvent event, Player player, 
