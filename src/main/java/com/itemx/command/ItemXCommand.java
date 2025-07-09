@@ -166,36 +166,7 @@ public class ItemXCommand implements CommandExecutor, TabCompleter {
         return true;
     }
     
-    private boolean handleTrade(CommandSender sender, String[] args) {
-        if (args.length < 2) {
-            sender.sendMessage(plugin.getPrefix().append(
-                plugin.getColorUtil().parseColor("<red>Usage: /itemx trade <list|create|delete|rename|title|edit|reload>")
-            ));
-            return true;
-        }
-        
-        switch (args[1].toLowerCase()) {
-            case "list":
-                return handleTradeList(sender);
-            case "create":
-                return handleTradeCreate(sender, args);
-            case "delete":
-                return handleTradeDelete(sender, args);
-            case "rename":
-                return handleTradeRename(sender, args);
-            case "title":
-                return handleTradeTitle(sender, args);
-            case "edit":
-                return handleTradeEdit(sender, args);
-            case "reload":
-                return handleTradeReload(sender);
-            default:
-                sender.sendMessage(plugin.getPrefix().append(
-                    plugin.getColorUtil().parseColor("<red>Invalid trade subcommand. Use: list, create, delete, rename, title, edit, reload")
-                ));
-                return true;
-        }
-    }
+
     
     private boolean handleTradeList(CommandSender sender) {
         if (!sender.hasPermission("itemx.trade.admin")) {
