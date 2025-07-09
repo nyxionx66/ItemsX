@@ -178,38 +178,7 @@ public class ItemXCommand implements CommandExecutor, TabCompleter {
     
 
     
-    private boolean handleTradeEdit(CommandSender sender, String[] args) {
-        if (!sender.hasPermission("itemx.trade.admin")) {
-            sender.sendMessage(plugin.getPrefix().append(plugin.getMessage("no-permission")));
-            return true;
-        }
-        
-        if (!(sender instanceof Player)) {
-            sender.sendMessage(plugin.getPrefix().append(
-                plugin.getColorUtil().parseColor("<red>Only players can use the trade editor.")
-            ));
-            return true;
-        }
-        
-        if (args.length < 3) {
-            sender.sendMessage(plugin.getPrefix().append(
-                plugin.getColorUtil().parseColor("<red>Usage: /itemx trade edit <gui-name>")
-            ));
-            return true;
-        }
-        
-        String guiName = args[2];
-        
-        if (!plugin.getTradeManager().hasTradeGUI(guiName)) {
-            sender.sendMessage(plugin.getPrefix().append(
-                plugin.getColorUtil().parseColor("<red>Trade GUI '" + guiName + "' not found.")
-            ));
-            return true;
-        }
-        
-        plugin.getTradeManager().openTradeManager((Player) sender, guiName);
-        return true;
-    }
+
     
     private boolean handleTradeReload(CommandSender sender) {
         if (!sender.hasPermission("itemx.trade.admin")) {
