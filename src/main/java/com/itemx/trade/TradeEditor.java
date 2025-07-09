@@ -385,7 +385,13 @@ public class TradeEditor implements Listener {
                                   EditorSession session, int slot) {
         // Allow interaction with interactive slots
         if (INTERACTIVE_SLOTS.contains(slot)) {
-            // Allow normal item placement/removal
+            // Handle right-click to clear slot
+            if (event.getClick() == ClickType.RIGHT) {
+                event.setCancelled(true);
+                handleSlotClear(player, session, slot);
+                return;
+            }
+            // Allow normal item placement/removal for other clicks
             Bukkit.getScheduler().runTask(plugin, () -> updateSessionFromGUI(player, session));
             return;
         }
