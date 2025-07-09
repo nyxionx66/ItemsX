@@ -28,18 +28,11 @@ public class ItemX extends JavaPlugin {
         // Initialize item manager
         itemManager = new ItemManager(this);
         
-        // Initialize trade system
-        tradeManager = new TradeManager(this);
-        tradeEditor = new TradeEditor(this);
-        tradeReorderGUI = new TradeReorderGUI(this);
-        
         // Register commands
         getCommand("itemx").setExecutor(new ItemXCommand(this));
-        getCommand("trade").setExecutor(new com.itemx.trade.TradeCommand(this));
         
-        // Load items and trades
+        // Load items
         itemManager.loadItems();
-        tradeManager.loadTrades();
         
         getLogger().info("ItemX has been enabled!");
     }
