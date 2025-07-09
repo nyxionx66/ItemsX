@@ -238,13 +238,27 @@ public class TradeEditor implements Listener {
     }
 
     /**
-     * Sets up the control buttons for the editor
+     * Sets up the control buttons for the editor with enhanced feedback
      */
     private void setupControlButtons(Inventory gui, EditorSession session) {
-        // Save button
-        gui.setItem(SAVE_BUTTON, createButton(Material.EMERALD, 
-            "<gradient:#00FF00:#32CD32>💾 Save Trade</gradient>", 
-            Arrays.asList("<green>Click to save this trade", "<gray>Requires Input 1 and Output"), 
+        // Determine save button state based on requirements
+        boolean canSave = session.getInput1() != null && session.getOutput() != null;
+        Material saveButtonMaterial = canSave ? Material.EMERALD : Material.GRAY_DYE;
+        String saveButtonColor = canSave ? "<gradient:#00FF00:#32CD32>" : "<gradient:#808080:#666666>";
+        
+        List<String> saveLore = new ArrayList<>();
+        if (canSave) {
+            saveLore.add("<green>✓ Ready to save this trade");
+            saveLore.add("<gray>All requirements met");
+        } else {
+            saveLore.add("<red>✗ Missing required items");
+            if (session.getInput1() == null) saveLore.add("<gray>• Input 1 is required");
+            if (session.getOutput() == null) saveLore.add("<gray>• Output is required");
+        }
+        
+        gui.setItem(SAVE_BUTTON, createButton(saveButtonMaterial, 
+            saveButtonColor + "💾 Save Trade</gradient>", 
+            saveLore, 
             "save_trade"));
 
         // Cancel button
@@ -259,11 +273,22 @@ public class TradeEditor implements Listener {
             Arrays.asList("<yellow>Click to clear all slots", "<gray>Removes all items from editor"), 
             "clear_all"));
 
-        // Trade ID button
+        // Trade ID button with enhanced feedback
         String tradeIdText = session.getTradeId() != null ? session.getTradeId() : "auto_generate";
+        boolean isEditing = session.getExistingTrade() != null;
+        
+        List<String> idLore = new ArrayList<>();
+        if (isEditing) {
+            idLore.add("<aqua>✎ Editing existing trade");
+            idLore.add("<gray>Original ID: " + session.getExistingTrade().getId());
+        } else {
+            idLore.add("<green>✎ Creating new trade");
+        }
+        idLore.add("<gray>Click to set custom ID");
+        
         gui.setItem(TRADE_ID_BUTTON, createButton(Material.NAME_TAG, 
             "<gradient:#4ECDC4:#44A08D>🏷️ Trade ID: " + tradeIdText + "</gradient>", 
-            Arrays.asList("<aqua>Click to set custom trade ID", "<gray>Leave empty for auto-generation"), 
+            idLore, 
             "set_trade_id"));
     }
 
