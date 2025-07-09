@@ -1,0 +1,38 @@
+name: ItemX
+main: com.itemx.ItemX
+version: 1.0.0
+api-version: 1.21
+description: A modern Minecraft plugin for custom items with NBT support and gradient colors
+author: ItemX Team
+website: https://github.com/itemx/itemx
+
+commands:
+  itemx:
+    description: ItemX root command
+    usage: /itemx <give|get|reload>
+    aliases: [ix]
+    permission: itemx.use
+  trade:
+    description: Trading GUI system
+    usage: /trade <gui-name> [player] OR /trade <subcommand>
+    permission: itemx.trade.use
+
+permissions:
+  itemx.use:
+    description: Base permission for ItemX commands
+    default: op
+  itemx.give:
+    description: Permission to give items
+    default: op
+  itemx.get:
+    description: Permission to get items for yourself
+    default: op
+  itemx.reload:
+    description: Permission to reload the plugin
+    default: op
+  itemx.trade.use:
+    description: Permission to use trade GUIs
+    default: op
+  itemx.trade.admin:
+    description: Permission to create and manage trade GUIs
+    default: op
