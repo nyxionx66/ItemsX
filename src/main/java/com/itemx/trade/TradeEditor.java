@@ -558,6 +558,30 @@ public class TradeEditor implements Listener {
         }
     }
 
+    private void handleSlotClear(Player player, EditorSession session, int slot) {
+        Inventory gui = player.getOpenInventory().getTopInventory();
+        ItemStack currentItem = gui.getItem(slot);
+        
+        if (currentItem != null && !isPlaceholderItem(currentItem)) {
+            // Return item to player
+            player.getInventory().addItem(currentItem);
+            
+            // Clear the slot and update session
+            gui.setItem(slot, null);
+            updateSessionFromGUI(player, session);
+            
+            // Refresh the GUI to show placeholder
+            openEditorGUI(player, session);
+            
+            String slotName = slot == INPUT1_SLOT ? "Input 1" : 
+                             slot == INPUT2_SLOT ? "Input 2" : "Output";
+            
+            player.sendMessage(plugin.getPrefix().append(
+                plugin.getColorUtil().parseColor("<yellow>Cleared " + slotName + " slot and returned item to inventory.")
+            ));
+        }
+    }
+
     // Action Handlers
 
     private void handleSaveTrade(Player player, EditorSession session) {
