@@ -38,8 +38,6 @@ public class ItemXCommand implements CommandExecutor, TabCompleter {
                 return handleGive(sender, args);
             case "get":
                 return handleGet(sender, args);
-            case "trade":
-                return handleTrade(sender, args);
             case "reload":
                 return handleReload(sender);
             default:
