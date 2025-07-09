@@ -753,11 +753,11 @@ public class TradeEditor implements Listener {
         if (item == null || !item.hasItemMeta()) return false;
         ItemMeta meta = item.getItemMeta();
         return meta.hasLore() && meta.lore() != null && 
-               meta.lore().stream().anyMatch(line -> 
-                   net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer.plainText()
-                       .serialize(line).contains("Place") || 
-                   net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer.plainText()
-                       .serialize(line).contains("Drag"));
+               meta.lore().stream().anyMatch(line -> {
+                   String text = net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer.plainText()
+                       .serialize(line);
+                   return text.contains("Place") || text.contains("Drag") || text.contains("Interaction Options");
+               });
     }
 
     private TradeDefinition.TradeItem createTradeItemFromItemStack(ItemStack item) {
