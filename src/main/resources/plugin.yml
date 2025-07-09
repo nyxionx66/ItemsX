@@ -12,10 +12,6 @@ commands:
     usage: /itemx <give|get|reload>
     aliases: [ix]
     permission: itemx.use
-  trade:
-    description: Trading GUI system
-    usage: /trade <gui-name> [player] OR /trade <subcommand>
-    permission: itemx.trade.use
 
 permissions:
   itemx.use:
@@ -29,10 +25,4 @@ permissions:
     default: op
   itemx.reload:
     description: Permission to reload the plugin
-    default: op
-  itemx.trade.use:
-    description: Permission to use trade GUIs
-    default: op
-  itemx.trade.admin:
-    description: Permission to create and manage trade GUIs
     default: op
