@@ -17,6 +17,7 @@ public class ItemX extends JavaPlugin {
     private ItemManager itemManager;
     private TradeManager tradeManager;
     private TradeEditor tradeEditor;
+    private TradeReorderGUI tradeReorderGUI;
     private ColorUtil colorUtil;
     
     @Override
