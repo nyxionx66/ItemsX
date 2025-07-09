@@ -2,9 +2,6 @@ package com.itemx;
 
 import com.itemx.command.ItemXCommand;
 import com.itemx.item.ItemManager;
-import com.itemx.trade.TradeManager;
-import com.itemx.trade.TradeEditor;
-import com.itemx.trade.TradeReorderGUI;
 import com.itemx.util.ColorUtil;
 import net.kyori.adventure.text.Component;
 import org.bukkit.configuration.file.FileConfiguration;
